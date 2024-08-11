@@ -9,7 +9,7 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(null);
 
   const fetchBannerData = async () => {
-    const response = await axios.get('http://localhost:5000/banner');
+    const response = await axios.get('https://backend-tuf-u112.onrender.com/banner');
     const data = response.data;
     setBannerData(data);
     setTimeLeft(data.timer);
