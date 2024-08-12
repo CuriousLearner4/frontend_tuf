@@ -15,6 +15,9 @@ function App() {
     setTimeLeft(data.timer);
   };
 
+  useEffect(()=>{fetchBannerData();
+  },[]);
+
   const debounce = (func,delay)=>{
     let timeoutID;
     return function(...args){
@@ -25,9 +28,7 @@ function App() {
 
   const toggleBanner = () => {
     setIsVisible(!isVisible);
-    if (!isVisible) {
-      fetchBannerData();
-    }
+    fetchBannerData();
   };
 
   const toggleHandler = debounce(toggleBanner,300);
@@ -35,11 +36,10 @@ function App() {
   
   useEffect(() => {
     if (isVisible && timeLeft > 0) {
-      const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
-      return () => clearInterval(timer);
-    } else if (timeLeft <= 0) {
-      setIsVisible(false);
-    }
+      const timer = setInterval(() => setTimeLeft((prev) => {
+        if(prev-1===0) setIsVisible(false);
+        return prev - 1;}), 1000);
+      return () => clearInterval(timer);}
   }, [isVisible, timeLeft]);
 
   return (
