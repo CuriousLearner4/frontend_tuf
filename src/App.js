@@ -15,6 +15,14 @@ function App() {
     setTimeLeft(data.timer);
   };
 
+  const debounce = (func,delay)=>{
+    let timeoutID;
+    return function(...args){
+      clearTimeout(timeoutID);
+      timeoutID = setTimeout(()=>func(...args),delay);
+    }
+  }
+
   const toggleBanner = () => {
     setIsVisible(!isVisible);
     if (!isVisible) {
@@ -22,6 +30,9 @@ function App() {
     }
   };
 
+  const toggleHandler = debounce(toggleBanner,300);
+
+  
   useEffect(() => {
     if (isVisible && timeLeft > 0) {
       const timer = setInterval(() => setTimeLeft((prev) => prev - 1), 1000);
@@ -33,7 +44,7 @@ function App() {
 
   return (
     <div>
-      <Header isVisible={isVisible} toggleBanner={toggleBanner} />
+      <Header isVisible={isVisible} toggleHandler={toggleHandler} />
       {isVisible && timeLeft > 0 && (
         <Banner
           description={bannerData.description}

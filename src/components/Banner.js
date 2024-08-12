@@ -10,7 +10,7 @@ const Banner = ({ description, link, timeLeft }) => {
           Click Here
         </a>
       )}
-      <p>Time remaining: {timeLeft} seconds</p>
+      <p>Time remaining: {timeLeft} {timeLeft===1?"second":"seconds"}</p>
     </div>
   );
 };
