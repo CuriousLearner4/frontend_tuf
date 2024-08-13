@@ -26,21 +26,25 @@ function App() {
     }
   }
 
-  const toggleBanner = () => {
+  const toggleBanner = async() => {
+    if(timeLeft===0)
+    await fetchBannerData();
     setIsVisible(!isVisible);
-    fetchBannerData();
   };
 
   const toggleHandler = debounce(toggleBanner,300);
 
   
   useEffect(() => {
-    if (isVisible && timeLeft > 0) {
-      const timer = setInterval(() => setTimeLeft((prev) => {
-        if(prev-1===0) setIsVisible(false);
-        return prev - 1;}), 1000);
+    if (timeLeft > 0) {
+      const timer = setInterval(() => setTimeLeft((timeLeft) => {
+        if(timeLeft-1===0) setIsVisible(false);
+        return timeLeft - 1;}), 1000);
       return () => clearInterval(timer);}
-  }, [isVisible, timeLeft]);
+    else if(timeLeft<=0) {
+      setIsVisible(false);
+    }
+  }, [timeLeft]);
 
   return (
     <div>
