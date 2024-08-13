@@ -6,7 +6,7 @@ import Banner from './components/Banner';
 function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [bannerData, setBannerData] = useState({});
-  const [timeLeft, setTimeLeft] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(0);
 
   const fetchBannerData = async () => {
     const response = await axios.get('https://backend-tuf-u112.onrender.com/banner');
@@ -14,9 +14,6 @@ function App() {
     setBannerData(data);
     setTimeLeft(data.timer);
   };
-
-  useEffect(()=>{fetchBannerData();
-  },[]);
 
   const debounce = (func,delay)=>{
     let timeoutID;
